@@ -1,0 +1,63 @@
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #ff6600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  height: 70px;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.site-header.hidden {
+  transform: translateY(-100%);
+}
+
+.site-header.visible {
+  transform: translateY(0);
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+}
+
+.logo span {
+  font-weight: normal;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+}
+
+nav li {
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+  transition: 0.2s;
+}
+
+nav li.active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: white;
+}
+
+.site-header.transparent {
+  background: rgba(255, 102, 0, 0.85);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}

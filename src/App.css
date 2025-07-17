@@ -1,0 +1,187 @@
+/* App.css = UI component styles */
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  transition: top 0.3s;
+  z-index: 999;
+}
+.header.hidden {
+  top: -100px;
+}
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+.nav-container nav a {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: black;
+}
+.nav-container nav a.active {
+  color: orange;
+}
+
+.banner {
+  height: 300px;
+  background-image: url("/banner.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+}
+.banner::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  background: white;
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+.banner-text {
+  padding: 100px 2rem;
+  color: white;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.card-content {
+  padding: 1rem;
+}
+.card-content h3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pagination {
+  text-align: center;
+  margin-top: 2rem;
+}
+.pagination button {
+  margin: 0 5px;
+  padding: 6px 10px;
+}
+.pagination .active {
+  background: orange;
+  color: white;
+}
+
+/* Control Bar Styles - Tambahkan ke App.css */
+.control-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.showing-info {
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.control-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.control-item label {
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.control-select {
+  padding: 6px 32px; /* lebih lebar kiri-kanan */
+  border: 1px solid #000000;
+  border-radius: 999px;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 60px;
+}
+
+.control-select:hover {
+  border-color: #ff6600;
+}
+
+.control-select:focus {
+  outline: none;
+  border-color: #ff6600;
+  box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.1);
+}
+
+/* Responsive design untuk control bar */
+@media (max-width: 768px) {
+  .control-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .control-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .control-item {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .control-select {
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .control-group {
+    gap: 0.5rem;
+  }
+
+  .control-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
