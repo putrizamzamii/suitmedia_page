@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import Header from "./components/Header";
 import Banner from "./components/Banner";
@@ -6,15 +7,18 @@ import PostCard from "./components/PostCard";
 import Pagination from "./components/Pagination";
 import "./App.css";
 
-// GUNAKAN ENV VARIABLE
 const API_URL = `${import.meta.env.VITE_API_URL}/ideas`;
 
 function App() {
   const [ideas, setIdeas] = useState([]);
-  const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
-  const [sort, setSort] = useState("-published_at");
   const [totalPages, setTotalPages] = useState(1);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Ambil dari URL query
+  const page = parseInt(searchParams.get("page")) || 1;
+  const size = parseInt(searchParams.get("size")) || 10;
+  const sort = searchParams.get("sort") || "-published_at";
 
   const fetchIdeas = async () => {
     try {
@@ -36,9 +40,18 @@ function App() {
     }
   };
 
+  const updateParams = (newParams) => {
+    setSearchParams({
+      page,
+      size,
+      sort,
+      ...newParams,
+    });
+  };
+
   useEffect(() => {
     fetchIdeas();
-  }, [page, size, sort])
+  }, [page, size, sort]);
 
   return (
     <>
@@ -49,7 +62,8 @@ function App() {
         <div className="control-bar">
           <div className="showing-info">
             <span>
-              Showing {(page - 1) * size + 1} - {Math.min(page * size, ideas.length)} of {ideas.length}
+              Showing {(page - 1) * size + 1} -{" "}
+              {Math.min(page * size, ideas.length)} of {ideas.length}
             </span>
           </div>
 
@@ -58,10 +72,7 @@ function App() {
               <label>Show per page:</label>
               <select
                 value={size}
-                onChange={(e) => {
-                  setSize(Number(e.target.value));
-                  setPage(1); // Reset ke halaman pertama saat mengubah size
-                }}
+                onChange={(e) => updateParams({ size: Number(e.target.value), page: 1 })}
                 className="control-select"
               >
                 {[10, 20, 50].map((s) => (
@@ -76,7 +87,7 @@ function App() {
               <label>Sort by:</label>
               <select
                 value={sort}
-                onChange={(e) => setSort(e.target.value)}
+                onChange={(e) => updateParams({ sort: e.target.value })}
                 className="control-select"
               >
                 <option value="-published_at">Newest</option>
@@ -94,7 +105,7 @@ function App() {
         <Pagination
           currentPage={page}
           totalPages={totalPages}
-          onPageChange={setPage}
+          onPageChange={(newPage) => updateParams({ page: newPage })}
         />
       </main>
     </>
