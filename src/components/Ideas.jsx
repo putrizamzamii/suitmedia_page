@@ -4,7 +4,8 @@ import PostCard from "./PostCard";
 import Pagination from "./Pagination";
 import Banner from "./Banner";
 
-const API_URL = "/api/ideas";
+// Pakai environment variable
+const API_URL = `${import.meta.env.VITE_API_URL}/ideas`;
 
 export default function Ideas() {
   const [posts, setPosts] = useState([]);
@@ -12,7 +13,6 @@ export default function Ideas() {
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-
     axios
       .get(API_URL, {
         params: {
@@ -24,7 +24,7 @@ export default function Ideas() {
       })
       .then((res) => {
         setPosts(res.data.data);
-        setTotalPages(res.data.meta.last_page); 
+        setTotalPages(res.data.meta.last_page);
       })
       .catch((err) => console.error(err));
   }, [page]);
@@ -34,10 +34,14 @@ export default function Ideas() {
       <Banner />
       <div className="card-container">
         {posts.map((post) => (
-          <PostCard key={post.id} data={post} />
+          <PostCard key={post.id} item={post} />
         ))}
       </div>
-      <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={setPage}
+      />
     </>
   );
 }

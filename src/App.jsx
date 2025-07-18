@@ -6,7 +6,8 @@ import PostCard from "./components/PostCard";
 import Pagination from "./components/Pagination";
 import "./App.css";
 
-const API_URL = "/api/ideas"; // pakai proxy
+// GUNAKAN ENV VARIABLE
+const API_URL = `${import.meta.env.VITE_API_URL}/ideas`;
 
 function App() {
   const [ideas, setIdeas] = useState([]);
@@ -31,14 +32,13 @@ function App() {
       setTotalPages(Math.ceil(total / size));
     } catch (error) {
       console.error("Gagal ambil data dari API:", error);
-      setIdeas([]); // agar aplikasi tidak crash
+      setIdeas([]);
     }
   };
 
-
   useEffect(() => {
     fetchIdeas();
-  }, [page, size, sort]);
+  }, [page, size, sort])
 
   return (
     <>
